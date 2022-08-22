@@ -1,1 +1,79 @@
-<!doctype html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><title>fairviewpark</title><script defer="defer" type="module" src="/js/chunk-vendors.74e68275.js"></script><script defer="defer" type="module" src="/js/app.1c8eb301.js"></script><link href="/css/chunk-vendors.129c79ae.css" rel="stylesheet"><link href="/css/app.2bc266c4.css" rel="stylesheet"><script defer="defer" src="/js/chunk-vendors-legacy.47aa559c.js" nomodule></script><script defer="defer" src="/js/app-legacy.c75ed7c4.js" nomodule></script></head><body><noscript><strong>We're sorry but fairviewpark doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div></body></html>
+<!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><meta property=og:image content=https://dtx-public-resource.s3.ap-southeast-1.amazonaws.com/share/main.jpg><meta property=og:description content=dtxOgDescription><meta property=og:title content=dtxOgTitle><style type=text/css>#Loading {
+        top: 50%;
+        left: 50%;
+        position: absolute;
+        -webkit-transform: translateY(-50%) translateX(-50%);
+        transform: translateY(-50%) translateX(-50%);
+        z-index: 100;
+      }
+
+      @-webkit-keyframes ball-beat {
+        50% {
+          opacity: 0.2;
+          -webkit-transform: scale(0.75);
+          transform: scale(0.75);
+        }
+
+        100% {
+          opacity: 1;
+          -webkit-transform: scale(1);
+          transform: scale(1);
+        }
+      }
+
+      @keyframes ball-beat {
+        50% {
+          opacity: 0.2;
+          -webkit-transform: scale(0.75);
+          transform: scale(0.75);
+        }
+
+        100% {
+          opacity: 1;
+          -webkit-transform: scale(1);
+          transform: scale(1);
+        }
+      }
+
+      .ball-beat > div {
+        background-color: #279fcf;
+        width: 15px;
+        height: 15px;
+        border-radius: 100% !important;
+        margin: 2px;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        display: inline-block;
+        -webkit-animation: ball-beat 0.7s 0s infinite linear;
+        animation: ball-beat 0.7s 0s infinite linear;
+      }
+
+      .ball-beat > div:nth-child(2n-1) {
+        -webkit-animation-delay: 0.35s !important;
+        animation-delay: 0.35s !important;
+      }</style><script src=./env.js></script><link rel="shortcut icon" href=dtxOgIcon><script src=https://unpkg.com/grapesjs></script><script src=https://grapesjs.com/js/grapesjs-preset-webpage.min.js?v0.1.11></script><script src=https://unpkg.com/grapesjs-tabs></script><link href=https://unpkg.com/grapesjs/dist/css/grapes.min.css rel=stylesheet><script src=https://unpkg.com/grapesjs-lory-slider></script><link href=https://unpkg.com/grapesjs/dist/css/grapesjs-lory-slider.min.css rel=stylesheet><script src=https://unpkg.com/grapesjs-plugin-toolbox></script><link href=https://unpkg.com/grapesjs-plugin-toolbox/dist/grapesjs-plugin-toolbox.min.css rel=stylesheet><script src=https://unpkg.com/grapesjs-tooltip></script><title></title><link href=chunk-03161bf0.5ccb0b3b.js rel=prefetch><link href=chunk-0964258b.e7de1be1.js rel=prefetch><link href=chunk-17efdac6.8b56afd9.js rel=prefetch><link href=chunk-214ce19b.f01d1a89.js rel=prefetch><link href=chunk-22cdc71a.e25d3b33.js rel=prefetch><link href=chunk-2de897a6.11d087f2.js rel=prefetch><link href=chunk-31b38baa.3b0aaa06.js rel=prefetch><link href=chunk-3e73efde.16ac0c08.js rel=prefetch><link href=chunk-4d369af7.01bb5ff7.js rel=prefetch><link href=chunk-63ced407.14428770.js rel=prefetch><link href=chunk-71e4366e.2ca970e7.js rel=prefetch><link href=chunk-7963b9da.25a5ebdc.js rel=prefetch><link href=chunk-8a6d569c.87718c8b.js rel=prefetch><link href=chunk-a8767d0e.2fe343f5.js rel=prefetch><link href=chunk-c9508742.8062a214.js rel=prefetch><link href=css/chunk-03161bf0.3f614301.css rel=prefetch><link href=css/chunk-0964258b.a30401bc.css rel=prefetch><link href=css/chunk-17efdac6.229f9760.css rel=prefetch><link href=css/chunk-214ce19b.efa4a4eb.css rel=prefetch><link href=css/chunk-22cdc71a.42006f3f.css rel=prefetch><link href=css/chunk-2de897a6.9eb2439e.css rel=prefetch><link href=css/chunk-31b38baa.9d02a45d.css rel=prefetch><link href=css/chunk-3e73efde.5af15f05.css rel=prefetch><link href=css/chunk-4d369af7.493e69a1.css rel=prefetch><link href=css/chunk-63ced407.d3cecc74.css rel=prefetch><link href=css/chunk-71e4366e.d082bbf7.css rel=prefetch><link href=css/chunk-7963b9da.06a14869.css rel=prefetch><link href=css/chunk-8a6d569c.3ddac3e4.css rel=prefetch><link href=css/chunk-a8767d0e.5e331450.css rel=prefetch><link href=css/chunk-c9508742.9c526be9.css rel=prefetch><link href=app.ce0934.js rel=preload as=script><link href=chunk-vendors.0ab955e0.js rel=preload as=script><link href=css/app.b0fd1132.css rel=preload as=style><link href=css/chunk-vendors.de02ae64.css rel=preload as=style><link href=css/chunk-vendors.de02ae64.css rel=stylesheet><link href=css/app.b0fd1132.css rel=stylesheet></head><body><div id=Loading><div class="loader-inner ball-beat"><div></div><div></div><div></div></div></div><div id=app></div><script src=./config.js></script><script defer src=https://js.stripe.com/v3/ ></script><script>document.documentElement.addEventListener(
+        "touchstart",
+        function(event) {
+          if (event.touches.length > 1) {
+            event.preventDefault();
+          }
+        },
+        {
+          passive: false,
+        }
+      );
+
+      var lastTouchEnd = 0;
+      document.documentElement.addEventListener(
+        "touchend",
+        function(event) {
+          var now = Date.now();
+          if (now - lastTouchEnd <= 300) {
+            event.preventDefault();
+          }
+          lastTouchEnd = now;
+        },
+        {
+          passive: false,
+        }
+      );</script><script src=chunk-vendors.0ab955e0.js></script><script src=app.ce0934.js></script></body></html>
