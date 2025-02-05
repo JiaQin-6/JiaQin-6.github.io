@@ -1,0 +1,59 @@
+
+#label {
+    width: 21cm;
+    min-height: 29.7cm;
+    padding: 2cm;
+    margin: 1cm auto;
+    border: 1px #D3D3D3 solid;
+    border-radius: 5px;
+    background: #eee;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.label_row {
+    width: 100%;
+    display: flex;
+    margin:0;
+    padding:0;
+}
+
+.label_column {
+  width: 70mm; /* plus .6 inches from padding */
+  height: 32mm; /* plus .125 inches from padding */
+  padding: .125in .3in 0;
+  margin-right: .125in; /* the gutter */
+  float: left;
+  text-align: center;
+  overflow: hidden;
+  outline: 1px dotted;
+}
+
+.page-break  {
+  clear: left;
+  display:block;
+  page-break-after:always;
+}
+
+.book_title {
+    font-size: 12px;
+    text-align:center;
+    padding-top:10px;
+}
+.acno {
+    font-size: 12px;
+    text-align:center;
+}
+.call_number {
+    font-size: 12px;
+    text-align:center;
+}
+.school_name {
+    font-size: 12px;
+    text-align:center;
+}
+
+.vue-barcode-element {
+    height:30px;
+    width:100%;
+    text-align:center;
+}

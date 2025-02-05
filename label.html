@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #FAFAFA;
+      font: 12pt "Tahoma";
+    }
+
+    * {
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    .page {
+      /* min-height: 29.7cm; */
+      /* margin: 1cm auto; */
+      border: 1px #D3D3D3 solid;
+      border-radius: 5px;
+      background: white;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      box-sizing: border-box;
+    }
+
+    @page {
+      /* size: 297mm 420mm; */
+      /* margin-top:2.5mm;
+    margin-bottom: 2.5mm; */
+      margin-top: 0mm;
+      margin-bottom: 0mm;
+      margin-left: 0;
+      margin-right: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    @media print {
+      .page {
+        margin-top: 0mm;
+        margin-bottom: 0mm;
+        margin-left: 0;
+        margin-right: 0;
+        border: initial;
+        border-radius: initial;
+        /* width: initial; */
+        min-height: initial;
+        box-shadow: initial;
+        background: initial;
+        page-break-after: always;
+        box-sizing: border-box;
+      }
+
+      .page-main {
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-left: 0;
+        margin-right: 0;
+        border: initial;
+        border-radius: initial;
+        /* width: initial; */
+        min-height: auto;
+        box-shadow: initial;
+        background: initial;
+        page-break-after: always;
+        box-sizing: border-box;
+      }
+    }
+
+    .book_title {
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .acno {
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .call_number {
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .school_name {
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .barcodeTarget {
+      height: 30px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .label_row {
+      width: 100%;
+      display: flex;
+      margin: 0;
+      padding: 0;
+    }
+
+    .label_column {
+      width: 70mm;
+      /* plus .6 inches from padding */
+      height: 32mm;
+      /* plus .125 inches from padding */
+      padding-top: 5px;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-bottom: 5px;
+      margin-right: 0;
+      margin-bottom: 0;
+      /* the gutter */
+      float: left;
+      text-align: center;
+      overflow: hidden;
+      /* outline: 1px dotted; */
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+  </div>
+</body>
+<script>
+  //
+  var queryString = window.location.search;
+  var urlParams = new URLSearchParams(queryString);
+  var label_width = urlParams.get('label_width')
+  var label_height = urlParams.get('label_height')
+  var rows = urlParams.get('row')
+  //var row_array = Array.from({length: rows}, (_, i) => i + 1)
+  var columns = urlParams.get('column')
+  //var column_array = Array.from({length: columns}, (_, i) => i + 1)
+  var fontsize = urlParams.get('fontsize')
+  var margin_right = urlParams.get('margin_right')
+  var margin_bottom = urlParams.get('margin_bottom')
+  var margin_left = urlParams.get('margin_left')
+  var margin_top = urlParams.get('margin_top')
+  var is_school_name = urlParams.get('is_school_name')
+  var is_acno = urlParams.get('is_acno')
+  var is_call_number = urlParams.get('is_call_number')
+  var is_book_title = urlParams.get('is_book_title')
+  var row_array_length = urlParams.get('row_array_length')
+  var barcode_type = urlParams.get('barcode_type')
+  var school_info = urlParams.get('school_info')
+  var paper_width = urlParams.get('paper_width')
+  var paper_height = urlParams.get('paper_height')
+  // 設置紙張寬高
+  var style = document.createElement('style');
+  style.innerHTML = `@page {
+    size: ${Number(paper_width)}mm ${Number(paper_height)}mm;
+    margin-top: 0mm;
+    margin-bottom: 0mm;
+    margin-left: 0;
+    margin-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }`;
+  document.head.appendChild(style);
+  $('.page').css('width', paper_width+'mm');
+  // get books
+  var books_json = localStorage.getItem('Books');
+  var books = JSON.parse(books_json);
+  //
+  // let pagination_index = [];
+  // for (let i = 0; i < Number(row_array_length); i++) {
+  //   if (pagination_index.length !== 0) {
+  //     if ((i - pagination_index[pagination_index.length - 1] + 1) * Number(label_height)+Number(margin_top)+Number(margin_bottom) > paper_height) {
+  //       pagination_index.push(i);
+  //     }
+  //   } else {
+  //     if ((i + 1) * Number(label_height)+Number(margin_top)+Number(margin_bottom) > paper_height) {
+  //       pagination_index.push(i);
+  //     }
+  //   }
+  // }
+  //create label divs
+  let PageSizeNumber = Math.ceil(books.length / (rows * columns));
+  for (let p = 0; p < PageSizeNumber; p++) {
+    $('.page').append(`<div class='page-main' id=page_${p} style='height:${paper_height}mm;box-sizing: border-box;'></div>`);
+    let target_page = document.querySelector(`#page_${p}`)
+    for (let i = 0; i < rows; i++) {
+      $(`<div class="label_row" id=row_${p}_${i}></div>`).appendTo(target_page)
+      let target_row = document.querySelector(`#row_${p}_${i}`)
+      for (let j = 0; j < columns; j++) {
+        let column_number = (parseInt(i) * parseInt(columns)) + parseInt(j) + (parseInt(p) * parseInt(rows) * parseInt(columns))
+        $(`<div class="label_column" style="background:#fff url('${books[column_number] && books[column_number].background_image}') no-repeat center 100%/cover" id=column_${p}_${i}_${column_number}></div>`).appendTo(target_row)
+        let target_column = document.querySelector(`#column_${p}_${i}_${column_number}`)
+        if (books[p * rows * columns + i * columns + j]) {
+          if (is_book_title == "true") {
+            $('<div class="book_title">' + (books[column_number].title || '') + '</div>').appendTo(target_column)
+          }
+          if (is_acno == "true") {
+            $('<div class="acno">' + ((barcode_type === 'acno' ? books[column_number].acno : books[column_number].barcode) || '') + '</div>').appendTo(target_column)
+          }
+          if (barcode_type === 'acno' ? books[column_number].acno : books[column_number].barcode) {
+            $(`<div id="barcodeTarget"><svg id="barcode" width="6" class="barcode${column_number} barcodeTarget"></svg></div>`).appendTo(target_column)
+            JsBarcode(".barcode" + column_number, (barcode_type === 'acno' ? books[column_number].acno : books[column_number].barcode),{format:"CODE128",width:"6",displayValue: false});
+          }
+
+          if (is_call_number == "true") {
+            $('<div class="call_number" style="display:flex;justify-content:space-around"><span>' + (books[column_number].call_number || '') + '</span><span>' + (books[column_number].inhouse_location || '') + '</span></div>').appendTo(target_column)
+          }else{
+            $('<div class="call_number" style="display:flex;justify-content:space-around"><span>' + (books[column_number].inhouse_location || '') + '</span></div>').appendTo(target_column)
+          }
+          if (is_school_name == "true") {
+            $('<div class="school_name">' + school_info + '</div>').appendTo(target_column)
+          }
+        }
+      }
+    }
+  }
+
+  var pageStyles = document.getElementsByClassName('page-main');
+  for (let i = 0; i < pageStyles.length; i++) {
+    pageStyles[i].style['padding-right'] = margin_right + 'mm';
+    pageStyles[i].style['padding-left'] = margin_left + 'mm';
+    pageStyles[i].style['padding-bottom'] = margin_bottom + 'mm';
+    pageStyles[i].style['padding-top'] = margin_top + 'mm';
+  }
+  // change width and height of label
+  var labelStyles = document.querySelectorAll('.label_column')
+  for (let i = 0; i < labelStyles.length; i++) {
+    labelStyles[i].style.width = (Math.floor((paper_width - margin_left - margin_right) / columns) <
+      label_width
+      ? Math.floor((paper_width - margin_left - margin_right) / columns)
+      : label_width) + 'mm';
+    labelStyles[i].style.height = (Math.floor((paper_height - margin_top - margin_bottom) / rows) <
+      label_height
+      ? Math.floor((paper_height - margin_top - margin_bottom) / rows)
+      : label_height) + 'mm';
+    labelStyles[i].style.position = 'relative';
+    // labelStyles[i].style.marginRight = margin_right;
+    // labelStyles[i].style.marginBottom = margin_bottom;
+  }
+
+  var book_titles = document.querySelectorAll('.book_title')
+  for (let i = 0; i < book_titles.length; i++) {
+    book_titles[i].style.fontSize = fontsize;
+  }
+
+  var acnos = document.querySelectorAll('.acno')
+  for (let i = 0; i < acnos.length; i++) {
+    acnos[i].style.fontSize = fontsize;
+  }
+
+  var call_numbers = document.querySelectorAll('.call_number')
+  for (let i = 0; i < call_numbers.length; i++) {
+    call_numbers[i].style.fontSize = fontsize;
+  }
+
+  var school_names = document.querySelectorAll('.school_name')
+  for (let i = 0; i < school_names.length; i++) {
+    school_names[i].style.fontSize = fontsize;
+  }
+
+  $(document).ready(function () {
+    setTimeout(() => {
+      window.print();
+    }, 1000)
+
+  })
+
+</script>
+
+</html>
